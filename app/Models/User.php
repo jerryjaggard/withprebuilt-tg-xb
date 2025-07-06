@@ -183,6 +183,30 @@ class User extends Authenticatable
     }
 
     /**
+     * Check if user has telegram account linked
+     */
+    public function hasTelegramLinked(): bool
+    {
+        return !empty($this->telegram_id);
+    }
+
+    /**
+     * Get telegram display name
+     */
+    public function getTelegramDisplayName(): string
+    {
+        if ($this->telegram_username) {
+            return '@' . $this->telegram_username;
+        }
+        
+        $name = [];
+        if ($this->telegram_first_name) $name[] = $this->telegram_first_name;
+        if ($this->telegram_last_name) $name[] = $this->telegram_last_name;
+        
+        return implode(' ', $name) ?: 'Telegram User';
+    }
+
+    /**
      * 获取流量使用百分比
      */
     public function getTrafficUsagePercentage(): float
