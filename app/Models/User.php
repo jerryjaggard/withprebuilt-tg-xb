@@ -73,6 +73,7 @@ class User extends Authenticatable
         'commission_rate' => 'float',
         'next_reset_at' => 'timestamp',
         'last_reset_at' => 'timestamp',
+        'telegram_linked_at' => 'timestamp',
     ];
     protected $hidden = ['password'];
 
