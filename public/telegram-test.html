@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NetFlare VPN - Telegram Login Test</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .container {
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            text-align: center;
+            max-width: 400px;
+            width: 90%;
+        }
+        
+        .logo {
+            font-size: 2.5em;
+            font-weight: bold;
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+        
+        .subtitle {
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 1.1em;
+        }
+        
+        .login-section {
+            border: 2px dashed #e0e0e0;
+            padding: 30px;
+            border-radius: 15px;
+            margin: 20px 0;
+            background: #f9f9f9;
+        }
+        
+        .login-title {
+            font-size: 1.2em;
+            margin-bottom: 20px;
+            color: #333;
+        }
+        
+        #telegram-login-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 50px;
+            margin: 20px 0;
+        }
+        
+        .status {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 8px;
+            display: none;
+        }
+        
+        .status.success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        
+        .status.error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        
+        .info {
+            background: #e8f4f8;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+            text-align: left;
+        }
+        
+        .info h3 {
+            margin-top: 0;
+            color: #0c5460;
+        }
+        
+        .info ul {
+            margin: 10px 0;
+            padding-left: 20px;
+        }
+        
+        .info li {
+            margin: 5px 0;
+            color: #0c5460;
+        }
+        
+        .test-badge {
+            background: #28a745;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-size: 0.8em;
+            margin-left: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="logo">
+            🚀 NetFlare VPN
+            <span class="test-badge">TELEGRAM TEST</span>
+        </div>
+        <div class="subtitle">Fast & Secure Internet Access</div>
+        
+        <div class="login-section">
+            <div class="login-title">🔐 Login with Telegram</div>
+            <div id="telegram-login-container"></div>
+            <div id="status" class="status"></div>
+        </div>
+        
+        <div class="info">
+            <h3>✅ Test Configuration</h3>
+            <ul>
+                <li><strong>Domain:</strong> top.netflare.co</li>
+                <li><strong>Bot:</strong> @netflarechina</li>
+                <li><strong>Token:</strong> 7826...configured ✓</li>
+                <li><strong>Login:</strong> Enabled ✓</li>
+                <li><strong>Signup:</strong> Enabled ✓</li>
+            </ul>
+            
+            <h3>🎯 How to Test</h3>
+            <ul>
+                <li>Click the Telegram login button above</li>
+                <li>Authorize the bot in Telegram</li>
+                <li>Check if account is created/logged in</li>
+                <li>Verify welcome message in Telegram</li>
+            </ul>
+        </div>
+    </div>
+
+    <script src="/assets/telegram-login.js"></script>
+    <script>
+        // Initialize Telegram login widget
+        document.addEventListener('DOMContentLoaded', function() {
+            const telegramLogin = new TelegramLoginWidget({
+                containerId: 'telegram-login-container',
+                buttonSize: 'large',
+                cornerRadius: 10,
+                onAuth: function(data) {
+                    const statusDiv = document.getElementById('status');
+                    statusDiv.style.display = 'block';
+                    statusDiv.className = 'status success';
+                    statusDiv.innerHTML = `
+                        <strong>✅ Success!</strong><br>
+                        Welcome, ${data.user.telegram_first_name || 'User'}!<br>
+                        Account ${data.action === 'signup' ? 'created' : 'logged in'} successfully.<br>
+                        <small>Token: ${data.token.substring(0, 20)}...</small>
+                    `;
+                    
+                    // Store token for testing
+                    localStorage.setItem('auth_token', data.token);
+                    
+                    console.log('Telegram Auth Success:', data);
+                },
+                onError: function(error) {
+                    const statusDiv = document.getElementById('status');
+                    statusDiv.style.display = 'block';
+                    statusDiv.className = 'status error';
+                    statusDiv.innerHTML = `
+                        <strong>❌ Error!</strong><br>
+                        ${error}<br>
+                        <small>Check browser console for details</small>
+                    `;
+                    
+                    console.error('Telegram Auth Error:', error);
+                }
+            });
+            
+            telegramLogin.init().then(success => {
+                if (!success) {
+                    const statusDiv = document.getElementById('status');
+                    statusDiv.style.display = 'block';
+                    statusDiv.className = 'status error';
+                    statusDiv.innerHTML = `
+                        <strong>⚠️ Configuration Issue</strong><br>
+                        Telegram login is not properly configured.<br>
+                        Please run the setup script.
+                    `;
+                }
+            });
+        });
+    </script>
+</body>
+</html>
