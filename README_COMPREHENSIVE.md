@@ -367,6 +367,49 @@ Xboard is a modern VPN management panel built on Laravel 11 + Octane, designed f
 - **📄 /resources/views/admin.blade.php**: Update admin template
 - **📄 /public/assets/admin/**: Update admin assets
 
+## 🔄 Background Jobs & Commands
+
+### Background Jobs (/app/Jobs/)
+- **📄 TrafficFetchJob.php**: Process server traffic data
+- **📄 OrderHandleJob.php**: Handle order processing
+- **📄 StatUserJob.php**: Generate user statistics
+- **📄 StatServerJob.php**: Generate server statistics
+- **📄 SendEmailJob.php**: Handle email notifications
+- **📄 SendTelegramJob.php**: Send Telegram notifications
+- **📄 SyncUserOnlineStatusJob.php**: Sync user online status
+
+**Edit when**: Adding background processing, scheduled tasks
+
+### Console Commands (/app/Console/Commands/)
+- **📄 XboardInstall.php**: Installation command
+- **📄 XboardUpdate.php**: Update system command
+- **📄 ResetTraffic.php**: Traffic reset automation
+- **📄 CheckServer.php**: Server health checks
+- **📄 CheckOrder.php**: Order status verification
+- **📄 BackupDatabase.php**: Database backup utility
+- **📄 SendRemindMail.php**: Send reminder emails
+- **📄 MigrateFromV2b.php**: Migration from v2board
+- **📄 XboardStatistics.php**: Generate system statistics
+
+**Edit when**: Adding CLI tools, automation scripts
+
+## 🔌 Protocol System
+
+### Protocol Handlers (/app/Protocols/)
+- **📄 Clash.php**: Clash client configuration
+- **📄 ClashMeta.php**: Clash Meta configuration
+- **📄 Shadowsocks.php**: Shadowsocks configuration
+- **📄 Shadowrocket.php**: Shadowrocket client
+- **📄 SingBox.php**: SingBox configuration
+- **📄 Surge.php**: Surge client configuration
+- **📄 QuantumultX.php**: QuantumultX configuration
+- **📄 General.php**: Generic configuration
+- **📄 Loon.php**: Loon client configuration
+- **📄 Stash.php**: Stash client configuration
+- **📄 Surfboard.php**: Surfboard configuration
+
+**Edit when**: Adding new client support, protocol configuration
+
 ## 📋 Feature Implementation Guide
 
 ### 🎯 Want to Add User Analytics?
