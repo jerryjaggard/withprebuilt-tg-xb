@@ -35,3 +35,15 @@ Route::prefix('v2/admin/telegram')->middleware(['auth:sanctum', 'admin'])->group
     Route::get('/webhook/info', [TelegramConfigController::class, 'webhookInfo']);
     Route::delete('/webhook', [TelegramConfigController::class, 'deleteWebhook']);
 });
+
+// Telegram webhook endpoint (public)
+Route::post('/v1/telegram/webhook', function(\Illuminate\Http\Request $request) {
+    // Handle Telegram webhook updates
+    $update = $request->all();
+    \Illuminate\Support\Facades\Log::info('Telegram webhook received', $update);
+    
+    // You can add webhook handling logic here
+    // For basic login/signup, this endpoint just needs to exist
+    
+    return response()->json(['ok' => true]);
+});
