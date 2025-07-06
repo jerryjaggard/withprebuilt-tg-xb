@@ -24,9 +24,33 @@ class SystemController extends Controller
             'schedule' => $this->getScheduleStatus(),
             'horizon' => $this->getHorizonStatus(),
             'schedule_last_runtime' => Cache::get(CacheKey::get('SCHEDULE_LAST_CHECK_AT', null)),
-            'logs' => $this->getLogStatistics()
+            'logs' => $this->getLogStatistics(),
+            'telegram' => $this->getTelegramSystemStatus()
         ];
         return $this->success($data);
+    }
+
+    /**
+     * Get Telegram system status for admin overview
+     */
+    protected function getTelegramSystemStatus(): array
+    {
+        $settings = TelegramBotSetting::current();
+        
+        if (!$settings) {
+            return [
+                'configured' => false,
+                'status' => 'Not configured'
+            ];
+        }
+
+        return [
+            'configured' => $settings->isConfigured(),
+            'login_enabled' => $settings->login_enabled,
+            'signup_enabled' => $settings->signup_enabled,
+            'bot_username' => $settings->bot_username,
+            'status' => $settings->isConfigured() ? 'Ready' : 'Needs configuration'
+        ];
     }
 
     /**
