@@ -27,12 +27,16 @@ return new class extends Migration
             $table->timestamps();
         });
 
-        // Insert default settings
+        // Insert default settings with user's bot configuration
         DB::table('v2_telegram_bot_settings')->insert([
-            'login_enabled' => false,
-            'signup_enabled' => false,
-            'notifications_enabled' => false,
-            'welcome_message' => 'Welcome to our VPN service! Your account has been created successfully.',
+            'bot_token' => '7826280720:AAG5cfK1K4sv4PttW-cHJnvzDgCUPI8JEFI',
+            'bot_username' => 'netflarechina',
+            'webhook_url' => 'https://top.netflare.co/api/v1/telegram/webhook',
+            'login_enabled' => true,
+            'signup_enabled' => true,
+            'notifications_enabled' => true,
+            'welcome_message' => 'Welcome to NetFlare VPN! Your account has been created successfully. Enjoy fast and secure internet access! 🚀',
+            'allowed_domains' => json_encode(['top.netflare.co']),
             'require_email_verification' => false,
             'auto_create_account' => true,
             'session_timeout' => 3600,
